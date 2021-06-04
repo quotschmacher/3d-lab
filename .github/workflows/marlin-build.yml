@@ -42,9 +42,9 @@ jobs:
       # copy result
       - name: Copy Files
         run: |
-          mkdir ${{ github.workspace }}/temp
-          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/temp/update.bin
-          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/temp/fcupdate.flg
+          mkdir ${{ github.workspace }}/FW
+          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/FW/update.bin
+          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/FW/fcupdate.flg
     
     # just for debugging purposes - print the file-structure
       - name: Print Folder Structure
@@ -52,13 +52,8 @@ jobs:
           sudo apt-get install tree
           tree -a
     # copy firmware to atrifacts
-      - name: Save firmware.bin
+      - name: Save files
         uses: actions/upload-artifact@v2
         with:
-          name: update.bin
-          path: ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin
-      - name: Save fcupdate.flg
-        uses: actions/upload-artifact@v2
-        with:
-          name: fcupdate.flg
-          path: ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin
+          name: Firmware
+          path: ${{ github.workspace }}/FW
