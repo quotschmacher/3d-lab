@@ -42,9 +42,8 @@ jobs:
       # copy result
       - name: Copy Files
         run: |
-          mkdir ${{ github.workspace }}/FW
-          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/update.bin
-          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/fcupdate.flg
+          sudo cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/update.bin
+          sudo cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/fcupdate.flg
     
     # just for debugging purposes - print the file-structure
       - name: Print Folder Structure
