@@ -43,17 +43,32 @@ jobs:
       - name: Copy Files
         run: |
           mkdir ${{ github.workspace }}/FW
-          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/FW/update.bin
-          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/FW/fcupdate.flg
+          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/update.bin
+          cp ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.bin ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/fcupdate.flg
     
     # just for debugging purposes - print the file-structure
       - name: Print Folder Structure
         run: |
           sudo apt-get install tree
           tree -a
-    # copy firmware to atrifacts
-      - name: Save files
+    # copy firmware to artifacts
+      - name: Save Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Firmware
-          path: ${{ github.workspace }}/FW
+          path: ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/
+          
+      - name: Zip Files
+        uses: papeloto/action-zip@v1
+        with:
+          files: ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/
+          dest: ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/firmware.zip
+          
+
+      - name: Push firmware
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Compiled firmware"
+          git push
