@@ -1,18 +1,20 @@
 name: Build Marlin Firmware
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'Firmware/Configuration/**.h'
+  #push:
+  #  branches:
+  #    - master
+  #  paths:
+  #    - 'Firmware/Configuration/**.h'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build_and_push:
     name: Compile and Push Firmware
     runs-on: ubuntu-latest
     env:
-      BOARD: STM32F103RC_btt_512K
+      BOARD: STM32F070RB_malyan
 
     steps:
       - name: Check out repo
@@ -29,10 +31,21 @@ jobs:
             -v $(pwd)/Firmware/Configuration:/home/platformio/CustomConfiguration \
             frealmyr/marlin-build:latest
 
-      - name: Push firmware
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Compiled firmware"
-          git push
+      #- name: Push firmware
+      #  run: |
+      #    git config user.name github-actions
+      #    git config user.email github-actions@github.com
+      #    git add .
+      #    git commit -m "Compiled firmware"
+      #    git push
+    # copy firmware to atrifacts
+      - name: Save firmware.bin
+        uses: actions/upload-artifact@v2
+        with:
+          name: update.bin
+          path: ${{ github.workspace }}/.pio/build/STM32F070RB_malyan/firmware.bin
+      - name: Save fcupdate.flg
+        uses: actions/upload-artifact@v2
+        with:
+          name: fcupdate.flg
+          path: ${{ github.workspace }}/.pio/build/STM32F070RB_malyan/firmware.bin
