@@ -1,11 +1,11 @@
 name: Build Marlin Firmware
 
 on:
-  #push:
-  #  branches:
-  #    - master
-  #  paths:
-  #    - 'Firmware/Configuration/**.h'
+  push:
+    branches:
+      - master
+    paths:
+      - 'Firmware/Configuration/**.h'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -58,11 +58,11 @@ jobs:
           name: Firmware
           path: ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/
           
-      - name: Zip Files
-        uses: papeloto/action-zip@v1
-        with:
-          files: ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/
-          dest: /Firmware/Builds/STM32F070RB_malyan/firmware.zip
+     # - name: Zip Files
+     #   uses: papeloto/action-zip@v1
+     #   with:
+     #     files: ${{ github.workspace }}/Firmware/Builds/STM32F070RB_malyan/
+     #     dest: /Firmware/Builds/STM32F070RB_malyan/firmware.zip
           
 
       - name: Push firmware
